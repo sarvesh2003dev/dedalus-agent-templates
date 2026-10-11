@@ -1,0 +1,3 @@
+* text=auto eol=lf
+design-original/** -text
+source-archives/** -text

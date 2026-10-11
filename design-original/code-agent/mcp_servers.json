@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "code-runner": {
+      "command": "python3",
+      "args": ["-m", "mcp_code_runner", "--sandbox", "/home/machine/sandbox"]
+    }
+  }
+}

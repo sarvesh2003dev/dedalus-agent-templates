@@ -1,0 +1,45 @@
+name: Test Agent Templates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        agent: [research-agent, browser-agent, code-agent, data-agent, slack-agent]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black
+
+      - name: Lint with flake8
+        run: |
+          flake8 ${{ matrix.agent }}/agent.py --max-line-length=120 --extend-ignore=E501
+
+      - name: Check formatting with black
+        run: |
+          black --check ${{ matrix.agent }}/agent.py || true
+
+      - name: Validate MCP config
+        run: |
+          python -c "import json; json.load(open('${{ matrix.agent }}/mcp_servers.json'))"
+
+      - name: Validate requirements
+        run: |
+          if [ -f ${{ matrix.agent }}/requirements.txt ]; then
+            pip install -r ${{ matrix.agent }}/requirements.txt --dry-run 2>/dev/null || true
+          fi

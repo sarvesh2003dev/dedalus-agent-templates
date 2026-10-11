@@ -1,0 +1,7 @@
+date,region,product,amount_cents
+2026-09-01,APAC,Starter,120000
+2026-09-01,EU,Starter,85000
+2026-09-02,US,Pro,220000
+2026-09-02,US,Starter,100000
+2026-09-03,EU,Pro,175000
+2026-09-03,APAC,Starter,90000
